@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'json'
+require_relative 'lib/name_drawer'
+
+print 'How many groups are there? '
+num_groups = STDIN.gets.chomp.to_i
+unless num_groups
+  puts 'Sorry, I you need a least one group'
+  return
+end
+
+groups = {}
+
+num_groups.times do |group|
+  groups[group] = []
+end
+
+groups.keys.each do |group|
+  print "Whose names are in group #{group + 1}? "
+  groups[group] = STDIN.gets.chomp.split(' ')
+end
+
+name_drawer = NameDrawer.new(groups)
+result = name_drawer.generate_groups
+
+puts JSON.pretty_generate(result)
